@@ -161,20 +161,20 @@ fun PoseLab(model: PoseViewModel) {
                 }
             }
             else -> Column(Modifier.padding(padding).fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text("Hiểu kết quả đánh giá", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                Text("ML Kit cung cấp X, Y theo pixel và Z tương đối. Z không phải độ sâu vật lý theo mét. Ứng dụng dùng mô hình Accurate cho từng ảnh độc lập.")
-                Text("Mặc định: MPJPE chuẩn hóa thử nghiệm", fontWeight = FontWeight.Bold)
-                Text("Trừ pelvis của mỗi pose, sau đó chia riêng mỗi pose cho RMS khoảng cách 17 khớp tới pelvis. MPJPE là trung bình khoảng cách các khớp sau bước này; không có đơn vị và không phải MPJPE benchmark theo mm. PA-MPJPE thêm căn chỉnh scale, rotation và translation, không cho phép phản chiếu.")
-                Text("Mapping cần xác minh", fontWeight = FontWeight.Bold)
-                Text("Giả định thứ tự H36M-17: ${JointMapping.names.joinToString(", ")}. Pelvis = giữa hông; thorax = giữa vai; spine = giữa pelvis và thorax; nose và giữa hai tai là điểm thay thế gần đúng cho neck/head. Chưa xác minh mapping của dữ liệu thầy cung cấp.")
-                Text("Frame và hệ tọa độ", fontWeight = FontWeight.Bold)
-                Text("Mặc định index = (Y−1)×5+Z−1, bắt đầu từ 0. Có thể đổi offset, stride và hoán vị/đổi dấu trục GT trong Cấu hình. Một số GT ở các camera giống nhau; hoán vị trục không thay thế được phép đổi world-to-camera nếu dữ liệu yêu cầu extrinsics.")
-                Text("Chế độ mm", fontWeight = FontWeight.Bold)
-                Text("Chỉ bật sau khi có cơ sở hiệu chuẩn pixel→mm, đơn vị GT, hệ tọa độ và mapping. Hệ số là cố định cho batch và áp dụng theo pixel của ảnh thực sự đưa vào detector; không tự fit scale từ GT cho MPJPE. ML Kit vẫn có giới hạn về độ sâu nên hiệu chuẩn này không bảo đảm 3D vật lý chính xác.")
-                Text("Thời gian và trung bình", fontWeight = FontWeight.Bold)
-                Text("Thời gian chính gồm đọc JPG, giải mã, chỉnh EXIF và chờ nhận diện. Không gồm đọc GT, tính metric, vẽ và ghi preview. Có tính lần gọi đầu; CSV đánh dấu first_inference. Trung bình thời gian chỉ dùng ảnh nhận được kết quả tác vụ; sai số chỉ dùng frame có đủ 17 khớp đạt ngưỡng và GT hợp lệ. Ảnh thiếu GT không được tính là sai số 0.")
-                Text("Tệp và bộ nhớ", fontWeight = FontWeight.Bold)
-                Text("Ảnh lớn được giảm mẫu theo lũy thừa 2 để cạnh dài không quá 2560 pixel; tọa độ lưu theo ảnh đã xử lý. Preview giữ cạnh dài tối đa 960 pixel. CSV chứa tọa độ 33 landmark, cấu hình, đường dẫn GT và kết quả từng frame. Không dùng server hay database. Kết quả giữ khi xoay màn hình, không giữ sau khi hệ điều hành đóng tiến trình.")
+                val evaluation = if (state.results.isNotEmpty() || state.running) state.runConfig else state.config
+                Text("Cách đọc kết quả", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                Text("Đơn vị", fontWeight = FontWeight.Bold)
+                Text(if (evaluation.normalized)
+                    "Đang dùng tọa độ chuẩn hóa: lấy tâm hông làm gốc và điều chỉnh kích thước từng pose về cùng thang đo. Sai số thể hiện mức chênh lệch tương đối."
+                    else "Đang dùng đơn vị mm theo hệ số hiệu chuẩn đã lưu trong cấu hình.")
+                Text("MPJPE", fontWeight = FontWeight.Bold)
+                Text("Khoảng cách trung bình giữa 17 cặp khớp dự đoán và Ground Truth sau khi đưa về cùng quy ước tọa độ. Giá trị càng gần 0, hai pose càng khớp nhau.")
+                Text("PA-MPJPE", fontWeight = FontWeight.Bold)
+                Text("Sai số trung bình sau khi căn chỉnh vị trí, hướng và kích thước pose dự đoán với Ground Truth.")
+                Text("Thời gian xử lý", fontWeight = FontWeight.Bold)
+                Text("Đo từ lúc bắt đầu đọc ảnh đến khi nhận diện hoàn tất, tính bằng ms. Dòng ML cho biết thời gian gọi và chờ ML Kit trả kết quả.")
+                Text("Xem từng khớp", fontWeight = FontWeight.Bold)
+                Text("Bấm Chi tiết so sánh GT dưới mỗi ảnh để xem tọa độ và sai lệch từng khớp. Thanh phía trên hiển thị trung bình sai số của các frame đánh giá được và tiến độ xử lý.")
             }
         }
     }

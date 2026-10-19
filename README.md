@@ -187,7 +187,7 @@ Kết quả chưa xuất chỉ giữ trong phiên ứng dụng. Hãy xuất CSV 
 
 Bấm **Cấu hình** khi ứng dụng không đang quét hoặc xử lý. Với lần thử đầu tiên, giữ các giá trị mặc định.
 
-Cấu hình cho phép chỉnh chế độ chuẩn hóa, hệ trục GT, ngưỡng landmark và quy tắc lấy frame. Chế độ mm cần có thông tin hiệu chuẩn, đơn vị GT và hệ tọa độ phù hợp; không tự coi pixel là mm. Tab **Phương pháp** trong ứng dụng giải thích cách tính và các giả định hiện tại.
+Cấu hình cho phép chỉnh chế độ chuẩn hóa, hệ trục GT, ngưỡng landmark và quy tắc lấy frame. Chế độ mm cần có thông tin hiệu chuẩn, đơn vị GT và hệ tọa độ phù hợp; không tự coi pixel là mm. Tab **Phương pháp** trong ứng dụng giải thích ngắn gọn cách đọc kết quả. Các quy ước và giả định được trình bày trong [thông tin kỹ thuật](docs/TECHNICAL.md).
 
 ## 10. Các tình huống thường gặp
 
