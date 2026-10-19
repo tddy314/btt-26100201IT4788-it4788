@@ -1,0 +1,15 @@
+/.gradle
+/.kotlin/
+/build/
+/app/build/
+/captures/
+/local.properties
+GeneratedPluginRegistrant.java
+.cxx/
+.externalNativeBuild/
+
+# Remember to never publicly share your keystore.
+# Keep signing credentials local.
+key.properties
+**/*.keystore
+**/*.jks
